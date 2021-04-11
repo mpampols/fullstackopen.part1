@@ -4,20 +4,43 @@ const Button = (props) => {
   return <button onClick={props.handleClick}>{props.text}</button>;
 };
 
+const Statistic = (props) => {
+  return (
+    <tr>
+      <td>{props.text}</td>
+      <td>{props.value}</td>
+    </tr>
+  );
+};
+
 const Statistics = (props) => {
   const all = props.good + props.neutral + props.bad;
-  const average = (props.good - props.bad) / all;
-  const positive = (props.good / all) * 100;
-  return (
-    <div>
-      <div>good {props.good}</div>
-      <div>neutral {props.neutral}</div>
-      <div>bad {props.bad}</div>
-      <div>all {all}</div>
-      <div>average {average}</div>
-      <div>positive {positive}</div>
-    </div>
-  );
+  var average = 0;
+  var positive = 0;
+
+  if (all !== 0) {
+    average = (props.good - props.bad) / all;
+    positive = (props.good / all) * 100;
+  }
+
+  if (all === 0) {
+    return <div>No feedback given</div>;
+  } else {
+    return (
+      <div>
+        <table>
+          <tbody>
+            <Statistic text="good" value={props.good}></Statistic>
+            <Statistic text="neutral" value={props.neutral}></Statistic>
+            <Statistic text="bad" value={props.bad}></Statistic>
+            <Statistic text="all" value={all}></Statistic>
+            <Statistic text="average" value={average}></Statistic>
+            <Statistic text="positive" value={positive}></Statistic>
+          </tbody>
+        </table>
+      </div>
+    );
+  }
 };
 
 const App = () => {
